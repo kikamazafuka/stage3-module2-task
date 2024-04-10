@@ -4,16 +4,21 @@ import com.mjc.school.repository.model.AuthorModel;
 import com.mjc.school.repository.model.NewsModel;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Component
 public class DataSource {
+
+    private final String AUTHOR_PATH = "authors";
+    private final String CONTENT_PATH = "content";
+    private final String NEWS_PATH = "news";
     private static final DataSource instance = new DataSource();
 
     private DataSource() {
@@ -25,13 +30,16 @@ public class DataSource {
 
     public List<NewsModel> generateNews() {
         List<NewsModel> newsList = new ArrayList<>();
-        List<String> authorsData = readFromFile("authors");
-        List<String> contentData = readFromFile("content");
+        List<String> authorsData = getTextListFromFile(AUTHOR_PATH);
+        List<String> contentData = getTextListFromFile(CONTENT_PATH);
+        List<String> titleData = getTextListFromFile(NEWS_PATH);
 
         for (int i = 1; i <= 20; i++) {
+            Random random = new Random();
             AuthorModel author = createAuthor((long)i,authorsData.get(i % authorsData.size()));
             String content = contentData.get(i % contentData.size());
-            NewsModel news = new NewsModel((long) i, "Title " + i,
+            String title = titleData.get(random.nextInt(20));
+            NewsModel news = new NewsModel((long) i, title,
                                             content, LocalDateTime.now(),
                                             LocalDateTime.now(), author.getId());
             newsList.add(news);
@@ -41,7 +49,7 @@ public class DataSource {
 
     public List<AuthorModel> generateAuthor(){
         List<AuthorModel> authorList = new ArrayList<>();
-        List<String> authorsData = readFromFile("authors");
+        List<String> authorsData = getTextListFromFile(AUTHOR_PATH);
         for (int i = 1; i <= 20; i++) {
             AuthorModel author = createAuthor((long)i, authorsData.get(i % authorsData.size()));
             authorList.add(author);
@@ -51,8 +59,6 @@ public class DataSource {
 
     private static AuthorModel createAuthor(Long id, String authorData) {
         if (authorData != null) {
-//            Random random = new Random();
-//            long id = random.nextInt(30);
             AuthorModel authorModel = new AuthorModel();
             authorModel.setId(id);
             authorModel.setName(authorData);
@@ -62,12 +68,18 @@ public class DataSource {
         }
     }
 
-    private static List<String> readFromFile(String fileName) {
-        try {
-            Path filePath = Paths.get(DataSource.class.getClassLoader().getResource(fileName).toURI());
-            return Files.readAllLines(filePath);
-        } catch (IOException | NullPointerException | java.net.URISyntaxException e) {
-            throw new RuntimeException("Error reading file: " + fileName, e);
-        }
+//    private static List<String> readFromFile(String fileName) {
+//        try {
+//            Path filePath = Paths.get(DataSource.class.getClassLoader().getResource(fileName).toURI());
+//            return Files.readAllLines(filePath);
+//        } catch (IOException | NullPointerException | java.net.URISyntaxException e) {
+//            throw new RuntimeException("Error reading file: " + fileName, e);
+//        }
+//    }
+
+    public static List<String> getTextListFromFile(String filepath) {
+        InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(filepath);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+        return bufferedReader.lines().toList();
     }
 }
