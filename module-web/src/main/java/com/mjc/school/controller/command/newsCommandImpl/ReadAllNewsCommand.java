@@ -6,6 +6,8 @@ import com.mjc.school.service.dto.news.NewsDtoRequest;
 import com.mjc.school.service.dto.news.NewsDtoResponse;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class ReadAllNewsCommand implements BaseCommand {
 
@@ -17,6 +19,8 @@ public class ReadAllNewsCommand implements BaseCommand {
 
     @Override
     public void execute() {
-        newsController.readAll();
+        System.out.println("All News:");
+        List<NewsDtoResponse> allNews = newsController.readAll();
+        allNews.forEach(System.out::println);
     }
 }

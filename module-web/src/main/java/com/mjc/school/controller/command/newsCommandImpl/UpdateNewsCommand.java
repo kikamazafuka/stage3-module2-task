@@ -36,6 +36,7 @@ public class UpdateNewsCommand implements BaseCommand {
                 .content(content)
                 .authorId(authorId)
                 .build();
-        newsController.update(newsDTO);
+        NewsDtoResponse updatedNews = newsController.update(newsDTO);
+        System.out.println("Updated news: " + updatedNews);
     }
 }

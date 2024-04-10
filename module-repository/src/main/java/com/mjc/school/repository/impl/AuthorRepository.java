@@ -38,9 +38,10 @@ public class AuthorRepository implements BaseRepository<AuthorModel, Long> {
 
     @Override
     public AuthorModel create(AuthorModel author) {
+//        Long authorId = author.getId();
         LocalDateTime time = LocalDateTime.parse(LocalDateTime.now().format(TIME_FORMAT));
-        Long id = (long) allAuthors.size() + 1;
-        author.setId(id);
+        Long authorId = (long) allAuthors.size() + 1;
+        author.setId(authorId);
         author.setCreateDate(time);
         author.setName(author.getName());
         author.setLastUpdateDate(time);

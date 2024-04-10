@@ -6,17 +6,20 @@ import com.mjc.school.service.dto.author.AuthorDtoRequest;
 import com.mjc.school.service.dto.author.AuthorDtoResponse;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class ReadAllAuthorCommand implements BaseCommand {
+    private final BaseController<AuthorDtoRequest, AuthorDtoResponse,Long> authorController;
     public ReadAllAuthorCommand(BaseController<AuthorDtoRequest, AuthorDtoResponse, Long> authorController) {
         this.authorController = authorController;
     }
 
-    private final BaseController<AuthorDtoRequest, AuthorDtoResponse,Long> authorController;
-
-
     @Override
     public void execute() {
-        authorController.readAll();
+        System.out.println("All authors:");
+        List<AuthorDtoResponse> allAuthors = authorController.readAll();
+        allAuthors.forEach(System.out::println);
+
     }
 }

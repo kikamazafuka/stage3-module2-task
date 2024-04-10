@@ -2,6 +2,7 @@ package com.mjc.school.repository.datasource;
 
 import com.mjc.school.repository.model.AuthorModel;
 import com.mjc.school.repository.model.NewsModel;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,8 +11,8 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
+@Component
 public class DataSource {
     private static final DataSource instance = new DataSource();
 
@@ -28,7 +29,7 @@ public class DataSource {
         List<String> contentData = readFromFile("content");
 
         for (int i = 1; i <= 20; i++) {
-            AuthorModel author = createAuthor(authorsData.get(i % authorsData.size()));
+            AuthorModel author = createAuthor((long)i,authorsData.get(i % authorsData.size()));
             String content = contentData.get(i % contentData.size());
             NewsModel news = new NewsModel((long) i, "Title " + i,
                                             content, LocalDateTime.now(),
@@ -42,16 +43,16 @@ public class DataSource {
         List<AuthorModel> authorList = new ArrayList<>();
         List<String> authorsData = readFromFile("authors");
         for (int i = 1; i <= 20; i++) {
-            AuthorModel author = createAuthor(authorsData.get(i % authorsData.size()));
+            AuthorModel author = createAuthor((long)i, authorsData.get(i % authorsData.size()));
             authorList.add(author);
         }
         return authorList;
     }
 
-    private static AuthorModel createAuthor(String authorData) {
+    private static AuthorModel createAuthor(Long id, String authorData) {
         if (authorData != null) {
-            Random random = new Random();
-            long id = random.nextInt(30);
+//            Random random = new Random();
+//            long id = random.nextInt(30);
             AuthorModel authorModel = new AuthorModel();
             authorModel.setId(id);
             authorModel.setName(authorData);

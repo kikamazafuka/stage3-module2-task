@@ -23,6 +23,7 @@ public class ReadByIdNewsCommand implements BaseCommand {
     public void execute() {
         System.out.println("Enter news ID:");
         Long id = scanner.nextLong();
-        newsController.readById(id);
+        NewsDtoResponse newsDtoResponse = newsController.readById(id);
+        System.out.println("News with id: " + id + ": " + newsDtoResponse);
     }
 }

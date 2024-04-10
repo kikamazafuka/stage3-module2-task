@@ -1,6 +1,7 @@
 package com.mjc.school.controller.command.newsCommandImpl;
 
 import com.mjc.school.controller.BaseController;
+import com.mjc.school.controller.annotation.CommandParam;
 import com.mjc.school.controller.command.BaseCommand;
 import com.mjc.school.service.dto.news.NewsDtoRequest;
 import com.mjc.school.service.dto.news.NewsDtoResponse;
@@ -13,7 +14,7 @@ public class CreateNewsCommand implements BaseCommand {
     private final BaseController<NewsDtoRequest, NewsDtoResponse,Long> newsController;
     private final Scanner scanner;
 
-    public CreateNewsCommand(BaseController<NewsDtoRequest, NewsDtoResponse, Long> newsController, Scanner scanner) {
+    public CreateNewsCommand(BaseController<NewsDtoRequest, NewsDtoResponse, Long> newsController, @CommandParam Scanner scanner) {
         this.newsController = newsController;
         this.scanner = scanner;
     }
@@ -31,6 +32,7 @@ public class CreateNewsCommand implements BaseCommand {
                 .title(title)
                 .content(content)
                 .authorId(authorId).build();
-        newsController.create(newsDTO);
+        NewsDtoResponse createdNews = newsController.create(newsDTO);
+        System.out.println("Created News: " + createdNews);
     }
 }

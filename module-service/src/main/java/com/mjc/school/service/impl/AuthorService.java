@@ -3,11 +3,11 @@ package com.mjc.school.service.impl;
 import com.mjc.school.repository.BaseRepository;
 import com.mjc.school.repository.model.AuthorModel;
 import com.mjc.school.service.BaseService;
+import com.mjc.school.service.annotation.AuthorValidate;
 import com.mjc.school.service.dto.author.AuthorDtoRequest;
 import com.mjc.school.service.dto.author.AuthorDtoResponse;
 import com.mjc.school.service.exceptions.NewsServiceException;
 import com.mjc.school.service.mapper.AuthorModelMapper;
-import com.mjc.school.service.validator.AuthorValidator;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +17,13 @@ import java.util.Optional;
 @Service
 public class AuthorService implements BaseService<AuthorDtoRequest, AuthorDtoResponse,Long> {
 
-    private BaseRepository<AuthorModel, Long> authorRepository;
-    private AuthorValidator validator;
+    private final BaseRepository<AuthorModel, Long> authorRepository;
+
     private final AuthorModelMapper authorModelMapper = Mappers.getMapper(AuthorModelMapper.class);
 
+    public AuthorService(BaseRepository<AuthorModel, Long> authorRepository) {
+        this.authorRepository = authorRepository;
+    }
 
     @Override
     public List<AuthorDtoResponse> readAll() {
@@ -34,11 +37,8 @@ public class AuthorService implements BaseService<AuthorDtoRequest, AuthorDtoRes
     }
 
     @Override
+    @AuthorValidate
     public AuthorDtoResponse create(AuthorDtoRequest createRequest) {
-        List<String> errors = validator.validate(createRequest);
-        if (!errors.isEmpty()) {
-            throw new IllegalArgumentException("Create validation failed: " + errors);
-        }
         try {
             AuthorModel authorModel = authorRepository.create(authorModelMapper.dtoToModel(createRequest));
             return authorModelMapper.modelToDto(authorModel);
@@ -48,11 +48,8 @@ public class AuthorService implements BaseService<AuthorDtoRequest, AuthorDtoRes
     }
 
     @Override
+    @AuthorValidate
     public AuthorDtoResponse update(AuthorDtoRequest updateRequest) {
-        List<String> errors = validator.validate(updateRequest);
-        if (!errors.isEmpty()) {
-            throw new IllegalArgumentException("Update validation failed: " + errors);
-        }
         try {
             Optional<AuthorModel> existingAuthor = authorRepository.readById(updateRequest.id());
             if (existingAuthor.isPresent()) {

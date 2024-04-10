@@ -10,25 +10,28 @@ import java.util.Scanner;
 
 @Component
 public class CreateAuthorCommand implements BaseCommand {
-    private final BaseController<AuthorDtoRequest, AuthorDtoResponse,Long> newsController;
+    private final BaseController<AuthorDtoRequest, AuthorDtoResponse,Long> authorController;
     private final Scanner scanner;
 
     public CreateAuthorCommand(BaseController<AuthorDtoRequest, AuthorDtoResponse, Long> newsController, Scanner scanner) {
-        this.newsController = newsController;
+        this.authorController = newsController;
         this.scanner = scanner;
     }
 
     @Override
     public void execute() {
-        System.out.println("Enter author ID:");
-        Long authorId = scanner.nextLong();
+//        System.out.println("Enter author ID:");
+//        Long authorId = scanner.nextLong();
+//        scanner.nextLine();
         System.out.println("Enter author name:");
         String name = scanner.nextLine();
 
         AuthorDtoRequest authorDto = AuthorDtoRequest.builder()
-                .id(authorId)
+//                .id(authorId)
                 .name(name)
                 .build();
-        newsController.create(authorDto);
+        AuthorDtoResponse authorDtoResponse = authorController.create(authorDto);
+        System.out.println("Created News: " + authorDtoResponse);
     }
 }
+

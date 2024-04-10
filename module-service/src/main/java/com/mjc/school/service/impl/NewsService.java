@@ -3,6 +3,7 @@ package com.mjc.school.service.impl;
 import com.mjc.school.repository.BaseRepository;
 import com.mjc.school.repository.model.NewsModel;
 import com.mjc.school.service.BaseService;
+import com.mjc.school.service.annotation.NewsValidate;
 import com.mjc.school.service.dto.news.NewsDtoRequest;
 import com.mjc.school.service.dto.news.NewsDtoResponse;
 import com.mjc.school.service.exceptions.NewsServiceException;
@@ -40,12 +41,10 @@ public class NewsService implements BaseService<NewsDtoRequest, NewsDtoResponse,
                 .orElseThrow(() -> new NewsServiceException("Error getting news by id", "GET_BY_ID_ERROR"));
     }
 
+
     @Override
+    @NewsValidate
     public NewsDtoResponse create(NewsDtoRequest createRequest) {
-        List<String> errors = newsValidator.validate(createRequest);
-        if (!errors.isEmpty()) {
-            throw new IllegalArgumentException("Create validation failed: " + errors);
-        }
         try {
             NewsModel newsModel = newsRepository.create(newsModelMapper.dtoToModel(createRequest));
             return newsModelMapper.modelToDto(newsModel);
@@ -55,11 +54,8 @@ public class NewsService implements BaseService<NewsDtoRequest, NewsDtoResponse,
     }
 
     @Override
+    @NewsValidate
     public NewsDtoResponse update(NewsDtoRequest updateRequest) {
-        List<String> errors = newsValidator.validate(updateRequest);
-        if (!errors.isEmpty()) {
-            throw new IllegalArgumentException("Update validation failed: " + errors);
-        }
         try {
             Optional<NewsModel> existingNews = newsRepository.readById(updateRequest.id());
             if (existingNews.isPresent()) {

@@ -10,10 +10,13 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-@RequiredArgsConstructor
 public class AuthorAspect {
 
-    private DataSource dataSource;
+    private final DataSource dataSource;
+
+    public AuthorAspect() {
+        this.dataSource = DataSource.getInstance();
+    }
 
     @Pointcut("isRepositoryLayer() && @annotation(com.mjc.school.repository.annotation.OnDelete)")
     public void isOnDelete(){
