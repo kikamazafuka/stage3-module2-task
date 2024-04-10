@@ -28,9 +28,10 @@ public class UpdateAuthorCommand implements BaseCommand {
         String name = scanner.nextLine();
 
 
-        AuthorDtoRequest authorDto = AuthorDtoRequest.builder()
-                .id(id)
-                .name(name).build();
+//        AuthorDtoRequest authorDto = AuthorDtoRequest.builder()
+//                .id(id)
+//                .name(name).build();
+        AuthorDtoRequest authorDto = new AuthorDtoRequest(null, name);
         authorController.update(authorDto);
     }
 }

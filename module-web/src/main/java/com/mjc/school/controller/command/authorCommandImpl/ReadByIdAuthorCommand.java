@@ -20,9 +20,9 @@ public class ReadByIdAuthorCommand implements BaseCommand {
 
     @Override
     public void execute() {
-        System.out.println("Enter news ID:");
+        System.out.println("Enter author ID:");
         Long id = scanner.nextLong();
         AuthorDtoResponse authorDtoResponse = authorController.readById(id);
-        System.out.println("News with id: " + id + ": " + authorDtoResponse);
+        System.out.println("Author with id: " + id + ": " + authorDtoResponse);
     }
 }

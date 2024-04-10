@@ -1,13 +1,9 @@
 package com.mjc.school.repository.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
 
-@Data
-@NoArgsConstructor
+//@Data
+//@NoArgsConstructor
 //@AllArgsConstructor
 public class NewsModel implements BaseEntity<Long>{
 
@@ -19,8 +15,8 @@ public class NewsModel implements BaseEntity<Long>{
     private Long authorId;
 
 
-//    public NewsModel() {
-//    }
+    public NewsModel() {
+    }
 
     public NewsModel(Long id, String title, String content, LocalDateTime createDate, LocalDateTime lastUpdateDate, Long authorId) {
         this.id = id;

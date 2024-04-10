@@ -28,10 +28,11 @@ public class CreateNewsCommand implements BaseCommand {
         System.out.println("Enter author ID:");
         Long authorId = scanner.nextLong();
 
-        NewsDtoRequest newsDTO = NewsDtoRequest.builder()
-                .title(title)
-                .content(content)
-                .authorId(authorId).build();
+//        NewsDtoRequest newsDTO = NewsDtoRequest.builder()
+//                .title(title)
+//                .content(content)
+//                .authorId(authorId).build();
+        NewsDtoRequest newsDTO = new NewsDtoRequest(null, title,content,authorId);
         NewsDtoResponse createdNews = newsController.create(newsDTO);
         System.out.println("Created News: " + createdNews);
     }

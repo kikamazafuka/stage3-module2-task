@@ -3,7 +3,6 @@ package com.mjc.school.repository.impl;
 import com.mjc.school.repository.BaseRepository;
 import com.mjc.school.repository.datasource.DataSource;
 import com.mjc.school.repository.model.NewsModel;
-import lombok.extern.java.Log;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -11,7 +10,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
-@Log
 @Repository
 public class NewsRepository implements BaseRepository<NewsModel, Long> {
 
@@ -27,7 +25,7 @@ public class NewsRepository implements BaseRepository<NewsModel, Long> {
 
     @Override
     public List<NewsModel> readAll() {
-        log.info("News repository: readAllNews");
+//        log.info("News repository: readAllNews");
         return this.allNews;
     }
 
@@ -67,7 +65,6 @@ public class NewsRepository implements BaseRepository<NewsModel, Long> {
             return newsModel;
         }
 
-        //TODO throw not found exception
         return null;
     }
 

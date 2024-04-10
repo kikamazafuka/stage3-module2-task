@@ -9,12 +9,12 @@ import com.mjc.school.service.dto.author.AuthorDtoResponse;
 import com.mjc.school.service.dto.news.NewsDtoRequest;
 import com.mjc.school.service.dto.news.NewsDtoResponse;
 
-import lombok.extern.java.Log;
+
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
-@Log
+//@Log
 @Component
 public class NewsMenu {
 
@@ -32,7 +32,7 @@ public class NewsMenu {
 
 
     public void start() {
-        log.info("News menu start");
+//        log.info("News menu start");
         printMenu();
         int choice = scanner.nextInt();
         scanner.nextLine();

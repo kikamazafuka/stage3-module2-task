@@ -9,7 +9,6 @@ import com.mjc.school.service.dto.news.NewsDtoResponse;
 import com.mjc.school.service.exceptions.NewsServiceException;
 import com.mjc.school.service.mapper.NewsModelMapper;
 import com.mjc.school.service.validator.NewsValidator;
-import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class NewsService implements BaseService<NewsDtoRequest, NewsDtoResponse,Long> {
     private BaseRepository<NewsModel, Long> newsRepository;
     private NewsValidator newsValidator;

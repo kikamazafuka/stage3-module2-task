@@ -30,12 +30,13 @@ public class UpdateNewsCommand implements BaseCommand {
         System.out.println("Enter new author ID:");
         Long authorId = scanner.nextLong();
 
-        NewsDtoRequest newsDTO = NewsDtoRequest.builder()
-                .id(id)
-                .title(title)
-                .content(content)
-                .authorId(authorId)
-                .build();
+//        NewsDtoRequest newsDTO = NewsDtoRequest.builder()
+//                .id(id)
+//                .title(title)
+//                .content(content)
+//                .authorId(authorId)
+//                .build();
+        NewsDtoRequest newsDTO = new NewsDtoRequest(id, title,content,authorId);
         NewsDtoResponse updatedNews = newsController.update(newsDTO);
         System.out.println("Updated news: " + updatedNews);
     }

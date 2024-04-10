@@ -20,16 +20,13 @@ public class CreateAuthorCommand implements BaseCommand {
 
     @Override
     public void execute() {
-//        System.out.println("Enter author ID:");
-//        Long authorId = scanner.nextLong();
-//        scanner.nextLine();
         System.out.println("Enter author name:");
         String name = scanner.nextLine();
 
-        AuthorDtoRequest authorDto = AuthorDtoRequest.builder()
-//                .id(authorId)
-                .name(name)
-                .build();
+//        AuthorDtoRequest authorDto = AuthorDtoRequest.builder()
+//                .name(name)
+//                .build();
+        AuthorDtoRequest authorDto = new AuthorDtoRequest(null,name);
         AuthorDtoResponse authorDtoResponse = authorController.create(authorDto);
         System.out.println("Created News: " + authorDtoResponse);
     }
