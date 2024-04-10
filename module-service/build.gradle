@@ -1,6 +1,3 @@
 dependencies {
     implementation project(':module-repository')
-    implementation "org.mapstruct:mapstruct:$mapstructVersion"
-    annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
-    implementation 'org.projectlombok:lombok:1.18.22'
 }
