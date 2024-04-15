@@ -27,10 +27,6 @@ public class UpdateAuthorCommand implements BaseCommand {
         System.out.println("Enter new name:");
         String name = scanner.nextLine();
 
-
-//        AuthorDtoRequest authorDto = AuthorDtoRequest.builder()
-//                .id(id)
-//                .name(name).build();
         AuthorDtoRequest authorDto = new AuthorDtoRequest(id, name);
         authorController.update(authorDto);
     }

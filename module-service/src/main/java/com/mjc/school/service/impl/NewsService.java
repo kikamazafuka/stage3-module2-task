@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-//@RequiredArgsConstructor
 public class NewsService implements BaseService<NewsDtoRequest, NewsDtoResponse,Long> {
     private BaseRepository<NewsModel, Long> newsRepository;
     private NewsValidator newsValidator;
