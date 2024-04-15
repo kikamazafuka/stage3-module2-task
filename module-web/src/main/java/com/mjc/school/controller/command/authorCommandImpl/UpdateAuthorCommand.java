@@ -14,9 +14,9 @@ public class UpdateAuthorCommand implements BaseCommand {
     private final Scanner scanner;
 
 
-    public UpdateAuthorCommand(BaseController<AuthorDtoRequest, AuthorDtoResponse, Long> authorController, Scanner scanner) {
+    public UpdateAuthorCommand(BaseController<AuthorDtoRequest, AuthorDtoResponse, Long> authorController) {
         this.authorController = authorController;
-        this.scanner = scanner;
+        this.scanner = new Scanner(System.in);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class UpdateAuthorCommand implements BaseCommand {
 //        AuthorDtoRequest authorDto = AuthorDtoRequest.builder()
 //                .id(id)
 //                .name(name).build();
-        AuthorDtoRequest authorDto = new AuthorDtoRequest(null, name);
+        AuthorDtoRequest authorDto = new AuthorDtoRequest(id, name);
         authorController.update(authorDto);
     }
 }

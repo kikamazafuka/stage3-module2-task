@@ -14,9 +14,9 @@ public class DeleteByIdNewsCommand implements BaseCommand {
     private final BaseController<NewsDtoRequest, NewsDtoResponse,Long> newsController;
     private final Scanner scanner;
 
-    public DeleteByIdNewsCommand(BaseController<NewsDtoRequest, NewsDtoResponse, Long> newsController, @CommandParam Scanner scanner) {
+    public DeleteByIdNewsCommand(BaseController<NewsDtoRequest, NewsDtoResponse, Long> newsController) {
         this.newsController = newsController;
-        this.scanner = scanner;
+        this.scanner = new Scanner(System.in);
     }
 
     @Override

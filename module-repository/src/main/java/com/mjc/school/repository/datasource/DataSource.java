@@ -68,15 +68,6 @@ public class DataSource {
         }
     }
 
-//    private static List<String> readFromFile(String fileName) {
-//        try {
-//            Path filePath = Paths.get(DataSource.class.getClassLoader().getResource(fileName).toURI());
-//            return Files.readAllLines(filePath);
-//        } catch (IOException | NullPointerException | java.net.URISyntaxException e) {
-//            throw new RuntimeException("Error reading file: " + fileName, e);
-//        }
-//    }
-
     public static List<String> getTextListFromFile(String filepath) {
         InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(filepath);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));

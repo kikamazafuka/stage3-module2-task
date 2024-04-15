@@ -10,7 +10,7 @@ import java.util.List;
 import static com.mjc.school.service.exceptions.ServiceErrorCode.*;
 
 @Component
-public class NewsValidator {
+public class NewsValidator extends BaseValidator{
 
     private static final String NEWS_CONTENT = "News content";
     private static final String AUTHOR_ID = "Author id";
@@ -32,29 +32,6 @@ public class NewsValidator {
         validateNumber(authorId, AUTHOR_ID);
         if (authorId > MAX_AUTHOR_ID) {
             throw new ValidatorException(String.format(AUTHOR_ID_DOES_NOT_EXIST.getMessage(), authorId));
-        }
-    }
-    private void validateNumber(Long id, String parameter) {
-        if (id == null || id < 1) {
-            throw new ValidatorException(
-                    String.format(VALIDATE_NEGATIVE_OR_NULL_NUMBER.getMessage(), parameter, parameter, id));
-        }
-    }
-
-    private void validateString(String value, String parameter, int minLength, int maxLength) {
-        if (value == null) {
-            throw new ValidatorException(
-                    String.format(VALIDATE_NULL_STRING.getMessage(), parameter, parameter));
-        }
-        if (value.trim().length() < minLength || value.trim().length() > maxLength) {
-            throw new ValidatorException(
-                    String.format(
-                            VALIDATE_STRING_LENGTH.getMessage(),
-                            parameter,
-                            minLength,
-                            maxLength,
-                            parameter,
-                            value));
         }
     }
 }

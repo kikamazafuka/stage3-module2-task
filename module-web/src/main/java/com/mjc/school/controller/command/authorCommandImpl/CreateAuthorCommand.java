@@ -13,9 +13,9 @@ public class CreateAuthorCommand implements BaseCommand {
     private final BaseController<AuthorDtoRequest, AuthorDtoResponse,Long> authorController;
     private final Scanner scanner;
 
-    public CreateAuthorCommand(BaseController<AuthorDtoRequest, AuthorDtoResponse, Long> newsController, Scanner scanner) {
+    public CreateAuthorCommand(BaseController<AuthorDtoRequest, AuthorDtoResponse, Long> newsController) {
         this.authorController = newsController;
-        this.scanner = scanner;
+        this.scanner = new Scanner(System.in);
     }
 
     @Override
@@ -23,9 +23,6 @@ public class CreateAuthorCommand implements BaseCommand {
         System.out.println("Enter author name:");
         String name = scanner.nextLine();
 
-//        AuthorDtoRequest authorDto = AuthorDtoRequest.builder()
-//                .name(name)
-//                .build();
         AuthorDtoRequest authorDto = new AuthorDtoRequest(null,name);
         AuthorDtoResponse authorDtoResponse = authorController.create(authorDto);
         System.out.println("Created News: " + authorDtoResponse);

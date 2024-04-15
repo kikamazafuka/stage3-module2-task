@@ -20,4 +20,9 @@ public class AuthorValidationAspect {
     public void validateAuthorDtoRequest(AuthorDtoRequest authorDtoRequest) {
         authorValidator.validateAuthorDto(authorDtoRequest);
     }
+
+    @Before("@annotation(com.mjc.school.service.annotation.AuthorValidate) && args(id)")
+    public void validateAuthorID(Long id) {
+        authorValidator.validateAuthorId(id);
+    }
 }

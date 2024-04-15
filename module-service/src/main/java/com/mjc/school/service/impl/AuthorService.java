@@ -6,7 +6,9 @@ import com.mjc.school.service.BaseService;
 import com.mjc.school.service.annotation.AuthorValidate;
 import com.mjc.school.service.dto.author.AuthorDtoRequest;
 import com.mjc.school.service.dto.author.AuthorDtoResponse;
-import com.mjc.school.service.exceptions.NewsServiceException;
+import com.mjc.school.service.exceptions.AuthorServiceException;
+import com.mjc.school.service.exceptions.NotFoundException;
+import com.mjc.school.service.exceptions.ServiceErrorCode;
 import com.mjc.school.service.mapper.AuthorModelMapper;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
@@ -31,9 +33,11 @@ public class AuthorService implements BaseService<AuthorDtoRequest, AuthorDtoRes
     }
 
     @Override
+    @AuthorValidate
     public AuthorDtoResponse readById(Long id) {
         return authorRepository.readById(id).map(authorModelMapper::modelToDto)
-                .orElseThrow(() -> new NewsServiceException("Error getting news by id", "GET_BY_ID_ERROR"));
+                .orElseThrow(() -> new NotFoundException(
+                        String.format(String.valueOf(ServiceErrorCode.AUTHOR_ID_DOES_NOT_EXIST.getMessage()), id)));
     }
 
     @Override
@@ -43,7 +47,7 @@ public class AuthorService implements BaseService<AuthorDtoRequest, AuthorDtoRes
             AuthorModel authorModel = authorRepository.create(authorModelMapper.dtoToModel(createRequest));
             return authorModelMapper.modelToDto(authorModel);
         } catch (Exception e){
-            throw new NewsServiceException("Error creating news", "CREATE_ERROR");
+            throw new AuthorServiceException("Error creating author", "CREATE_ERROR");
         }
     }
 
@@ -59,9 +63,9 @@ public class AuthorService implements BaseService<AuthorDtoRequest, AuthorDtoRes
                 return authorModelMapper.modelToDto(updatedAuthor);
             }
         } catch (Exception e){
-            throw new NewsServiceException("Error updating news", "UPDATE_ERROR");
+            throw new AuthorServiceException("Error updating author", "UPDATE_ERROR");
         }
-        throw new NewsServiceException("Updated news doesn't exist", "UPDATE_ERROR");
+        throw new AuthorServiceException("Updated author doesn't exist", "UPDATE_ERROR");
     }
 
     @Override
@@ -69,7 +73,7 @@ public class AuthorService implements BaseService<AuthorDtoRequest, AuthorDtoRes
         if (authorRepository.existById(id)){
             return authorRepository.deleteById(id);
         } else {
-            throw new NewsServiceException("Deleted news doesn't exist", "DELETE_ERROR");
+            throw new AuthorServiceException("Deleted author doesn't exist", "DELETE_ERROR");
         }
     }
 }

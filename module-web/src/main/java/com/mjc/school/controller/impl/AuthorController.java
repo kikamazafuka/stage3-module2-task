@@ -1,6 +1,9 @@
 package com.mjc.school.controller.impl;
 
 import com.mjc.school.controller.BaseController;
+import com.mjc.school.controller.annotation.CommandBody;
+import com.mjc.school.controller.annotation.CommandHandler;
+import com.mjc.school.controller.annotation.CommandParam;
 import com.mjc.school.service.BaseService;
 import com.mjc.school.service.dto.author.AuthorDtoRequest;
 import com.mjc.school.service.dto.author.AuthorDtoResponse;
@@ -20,22 +23,26 @@ public class AuthorController implements BaseController<AuthorDtoRequest, Author
     }
 
     @Override
+    @CommandHandler
     public List<AuthorDtoResponse> readAll() {
         return authorService.readAll();
     }
 
     @Override
-    public AuthorDtoResponse readById(Long id) {
+    @CommandHandler
+    public AuthorDtoResponse readById(@CommandParam Long id) {
         return authorService.readById(id);
     }
 
     @Override
-    public AuthorDtoResponse create(AuthorDtoRequest createRequest) {
+    @CommandHandler
+    public AuthorDtoResponse create(@CommandBody AuthorDtoRequest createRequest) {
         return authorService.create(createRequest);
     }
 
     @Override
-    public AuthorDtoResponse update(AuthorDtoRequest updateRequest) {
+    @CommandHandler
+    public AuthorDtoResponse update(@CommandBody AuthorDtoRequest updateRequest) {
         return authorService.update(updateRequest);
     }
 

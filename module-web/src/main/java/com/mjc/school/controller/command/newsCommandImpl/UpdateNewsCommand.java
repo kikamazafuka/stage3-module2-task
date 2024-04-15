@@ -13,9 +13,9 @@ public class UpdateNewsCommand implements BaseCommand {
     private final BaseController<NewsDtoRequest, NewsDtoResponse,Long> newsController;
     private final Scanner scanner;
 
-    public UpdateNewsCommand(BaseController<NewsDtoRequest, NewsDtoResponse, Long> newsController, Scanner scanner) {
+    public UpdateNewsCommand(BaseController<NewsDtoRequest, NewsDtoResponse, Long> newsController) {
         this.newsController = newsController;
-        this.scanner = scanner;
+        this.scanner = new Scanner(System.in);
     }
 
     @Override

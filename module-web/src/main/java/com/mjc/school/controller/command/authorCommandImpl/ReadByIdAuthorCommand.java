@@ -13,9 +13,9 @@ public class ReadByIdAuthorCommand implements BaseCommand {
     private final BaseController<AuthorDtoRequest, AuthorDtoResponse, Long> authorController;
     private final Scanner scanner;
 
-    public ReadByIdAuthorCommand(BaseController<AuthorDtoRequest, AuthorDtoResponse, Long> authorController, Scanner scanner) {
+    public ReadByIdAuthorCommand(BaseController<AuthorDtoRequest, AuthorDtoResponse, Long> authorController) {
         this.authorController = authorController;
-        this.scanner = scanner;
+        this.scanner = new Scanner(System.in);
     }
 
     @Override

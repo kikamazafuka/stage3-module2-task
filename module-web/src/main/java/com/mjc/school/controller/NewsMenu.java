@@ -1,6 +1,5 @@
 package com.mjc.school.controller;
 
-import com.mjc.school.controller.annotation.CommandHandler;
 import com.mjc.school.controller.command.BaseCommand;
 import com.mjc.school.controller.command.authorCommandImpl.*;
 import com.mjc.school.controller.command.newsCommandImpl.*;
@@ -9,57 +8,49 @@ import com.mjc.school.service.dto.author.AuthorDtoResponse;
 import com.mjc.school.service.dto.news.NewsDtoRequest;
 import com.mjc.school.service.dto.news.NewsDtoResponse;
 
-
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
-//@Log
 @Component
 public class NewsMenu {
-
-    public NewsMenu(BaseController<NewsDtoRequest, NewsDtoResponse, Long> newsController,
-                    BaseController<AuthorDtoRequest, AuthorDtoResponse, Long> authorController, Scanner scanner) {
-        this.newsController = newsController;
-        this.authorController = authorController;
-        this.scanner = scanner;
-    }
 
     private final BaseController<NewsDtoRequest, NewsDtoResponse,Long> newsController;
     private final BaseController<AuthorDtoRequest, AuthorDtoResponse,Long> authorController;
     private final Scanner scanner;
 
+    public NewsMenu(BaseController<NewsDtoRequest, NewsDtoResponse, Long> newsController,
+                    BaseController<AuthorDtoRequest, AuthorDtoResponse, Long> authorController) {
+        this.newsController = newsController;
+        this.authorController = authorController;
+        this.scanner = new Scanner(System.in);
+    }
 
 
     public void start() {
-//        log.info("News menu start");
-        printMenu();
-        int choice = scanner.nextInt();
-        scanner.nextLine();
-        while (choice!=0){
+        while (true){
             printMenu();
 
-            choice = scanner.nextInt();
+            int choice = scanner.nextInt();
             scanner.nextLine();
 
             switch (choice) {
                 case 1 -> executeCommand(new ReadAllNewsCommand(newsController));
-                case 2 -> executeCommand(new ReadByIdNewsCommand(newsController, scanner));
-                case 3 -> executeCommand(new CreateNewsCommand(newsController, scanner));
-                case 4 -> executeCommand(new UpdateNewsCommand(newsController, scanner));
-                case 5 -> executeCommand(new DeleteByIdNewsCommand(newsController, scanner));
+                case 2 -> executeCommand(new ReadByIdNewsCommand(newsController));
+                case 3 -> executeCommand(new CreateNewsCommand(newsController));
+                case 4 -> executeCommand(new UpdateNewsCommand(newsController));
+                case 5 -> executeCommand(new DeleteByIdNewsCommand(newsController));
                 case 6 -> executeCommand(new ReadAllAuthorCommand(authorController));
-                case 7 -> executeCommand(new ReadByIdAuthorCommand(authorController, scanner));
-                case 8 -> executeCommand(new CreateAuthorCommand(authorController, scanner));
-                case 9 -> executeCommand(new UpdateAuthorCommand(authorController, scanner));
-                case 10 -> executeCommand(new DeleteByIdAuthorCommand(authorController, scanner));
-                case 0 -> System.out.println("Exiting...");
+                case 7 -> executeCommand(new ReadByIdAuthorCommand(authorController));
+                case 8 -> executeCommand(new CreateAuthorCommand(authorController));
+                case 9 -> executeCommand(new UpdateAuthorCommand(authorController));
+                case 10 -> executeCommand(new DeleteByIdAuthorCommand(authorController));
+                case 0 -> System.exit(0);
                 default -> System.out.println("Invalid choice! Please enter a number between 0 and 10.");
             }
         }
     }
 
-    @CommandHandler
     private void executeCommand(BaseCommand command) {
         command.execute();
     }

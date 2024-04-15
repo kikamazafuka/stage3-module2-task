@@ -1,7 +1,6 @@
 package com.mjc.school.controller.command.newsCommandImpl;
 
 import com.mjc.school.controller.BaseController;
-import com.mjc.school.controller.annotation.CommandParam;
 import com.mjc.school.controller.command.BaseCommand;
 import com.mjc.school.service.dto.news.NewsDtoRequest;
 import com.mjc.school.service.dto.news.NewsDtoResponse;
@@ -14,9 +13,9 @@ public class CreateNewsCommand implements BaseCommand {
     private final BaseController<NewsDtoRequest, NewsDtoResponse,Long> newsController;
     private final Scanner scanner;
 
-    public CreateNewsCommand(BaseController<NewsDtoRequest, NewsDtoResponse, Long> newsController, @CommandParam Scanner scanner) {
+    public CreateNewsCommand(BaseController<NewsDtoRequest, NewsDtoResponse, Long> newsController) {
         this.newsController = newsController;
-        this.scanner = scanner;
+        this.scanner = new Scanner(System.in);
     }
 
     @Override
@@ -28,10 +27,6 @@ public class CreateNewsCommand implements BaseCommand {
         System.out.println("Enter author ID:");
         Long authorId = scanner.nextLong();
 
-//        NewsDtoRequest newsDTO = NewsDtoRequest.builder()
-//                .title(title)
-//                .content(content)
-//                .authorId(authorId).build();
         NewsDtoRequest newsDTO = new NewsDtoRequest(null, title,content,authorId);
         NewsDtoResponse createdNews = newsController.create(newsDTO);
         System.out.println("Created News: " + createdNews);
